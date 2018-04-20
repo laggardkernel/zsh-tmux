@@ -28,7 +28,7 @@ function _zsh_tmux_plugin_run() {
   local _tmux_session
   local _tmux_session_hash
   # name session as <directory>-<hash>
-  _tmux_session="$(pwd)" && _tmux_session="${_tmux_session##*/}" && _tmux_session="${_tmux_session// /_}" && _tmux_session="${_tmux_session//:/_}"
+  _tmux_session="$(pwd)" && _tmux_session="${_tmux_session##*/}" && _tmux_session="${_tmux_session// /_}" && _tmux_session="${_tmux_session//./_}" && _tmux_session="${_tmux_session//:/_}"
 
   _tmux_session_hash="$(pwd|md5)" && _tmux_session_hash="${_tmux_session_hash:0:5}"
 
