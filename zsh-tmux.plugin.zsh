@@ -49,11 +49,11 @@ function _zsh_tmux_plugin_run() {
   # set +x
 }
 
-if [[ "$ZSH_TMUX_AUTOSTARTED" != "true" ]] && \
+if [[ -z "$NO_AUTO_TMUX" ]] && \
   [[ -z "$TMUX" && -z "$EMACS" && -z "$VIM" && -z "$INSIDE_EMACS" && -z "$VSCODE_PID" ]] && ( \
   ( [[ -n "$SSH_TTY" ]] && zstyle -t ':prezto:module:tmux:auto-start' remote ) ||
   ( [[ -z "$SSH_TTY" ]] && zstyle -T ':prezto:module:tmux:auto-start' local ) \
 ); then
-  export ZSH_TMUX_AUTOSTARTED=true
+  export NO_AUTO_TMUX=1
   _zsh_tmux_plugin_run
 fi
