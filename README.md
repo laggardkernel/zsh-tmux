@@ -1,13 +1,17 @@
-# ZSH-tmux
+# zsh-tmux
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A ZSH plugin for tmux with features of:
-- Create/Attach sessions automatically
+Auto start a tmux session once shell is launched. Auto name the session as `directory-hash` to keeps a consistent name for sessions created in the same directories, which means we could auto attach to an existing session.
+
+## Features
+
+- Creating/Attaching sessions automatically on shell run
 - Consistent session name for the same directory
 - Options to
     - Disable auto session creating/attaching
     - Kill shell automatically once u detach from a tmux session
+    - Custom environment variable `TERM` for `tmux` commands
 
 ## Installation
 
@@ -44,23 +48,41 @@ git clone git@github.com:laggardkernel/zsh-tmux.git ${ZDOTDIR:-$HOME}/.zprezto/c
 git clone https://github.com/laggardkernel/zsh-tmux.git ${ZDOTDIR:-$HOME}/.zprezto/contrib/zsh-tmux
 ```
 
-## Usage
+## Settings
+### Auto Start
 Automatically attach to an existing tmux session, or create a session once the plugin is enabled. Disable auto attaching/creating with
 
 ```zsh
-# add it into .zshrc
-NO_AUTO_TMUX=1
+# global setting
+NO_AUTO_TMUX=1 # enabled by default
+
+# setting for local terminal only
+zstyle ':prezto:module:tmux:auto-start' local 'no' # default 'yes'
+
+# setting for remote terminal only
+zstyle ':prezto:module:tmux:auto-start' remote 'no' # default 'no'
 ```
 
-Enable auto session creating/attaching for Tmux CONTROL MODE in iTerm with
+### TERM Variable
+Custom environment variable `TERM` for `tmux` commands.
 
 ```zsh
-zstyle ":prezto:module:tmux:iterm" integrate "yes" # default off
+zstyle ":prezto:module:tmux:term" with_256color "xterm-256color" # default screen-256
+zstyle ":prezto:module:tmux:term" without_256color "xtermr" # default screen
+```
+
+### iTerm Integration
+Enable auto session creating/attaching support for Tmux CONTROL MODE in iTerm with
+
+```zsh
+zstyle ":prezto:module:tmux:iterm" integrate "yes" # default 'no'
 ```
 
 ## Todo
 
 - [ ] Length customization for hash suffix in session name
+- [ ] Setting to kill shell when detach from a session
+- [ ] Setting to kill shell when exit from a session
 
 ## License
 
