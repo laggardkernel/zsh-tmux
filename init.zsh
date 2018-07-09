@@ -17,16 +17,6 @@ function _zsh_tmux_plugin_run() {
   local -a tmux_cmd
   tmux_cmd=(command tmux)
 
-  # Determine if the terminal supports 256 colors
-  local default_term
-  if [[ "${terminfo[colors]}" == "256" ]]; then
-    zstyle -g default_term ":prezto:module:tmux:term" with_256color 2>/dev/null
-    default_term="${default_term:-screen-256color}"
-  else
-    zstyle -g default_term ":prezto:module:tmux:term" without_256color 2>/dev/null
-    default_term="${default_term:-screen}"
-  fi
-
   if [[ "$TERM_PROGRAM" == "iTerm.app" ]] && \
     zstyle -t ":prezto:module:tmux:iterm" integrate; then
     tmux_cmd+=(-CC)
@@ -48,10 +38,10 @@ function _zsh_tmux_plugin_run() {
   if [[ "$TERM_PROGRAM" == "iTerm.app" ]] && \
     zstyle -t ":prezto:module:tmux:iterm" integrate; then
     zstyle -T ":prezto:module:tmux" auto-close && \
-    TERM="$default_term" exec $tmux_cmd new-session -AD -s "$_tmux_session" ||
-    TERM="$default_term" $tmux_cmd new-session -AD -s "$_tmux_session"
+    exec $tmux_cmd new-session -AD -s "$_tmux_session" ||
+    $tmux_cmd new-session -AD -s "$_tmux_session"
   else
-    return_val=$(TERM="$default_term" $tmux_cmd new-session -AD -s "$_tmux_session") && \
+    return_val=$($tmux_cmd new-session -AD -s "$_tmux_session") && \
     { zstyle -T ":prezto:module:tmux" auto-close && exit } || \
     { [[ "$return_val" = *exited* ]] && exit }
   fi
