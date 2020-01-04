@@ -19,6 +19,8 @@ function _zsh_tmux_plugin_run() {
 
   if [[ "$TERM_PROGRAM" == "iTerm.app" ]] && \
     zstyle -t ":prezto:module:tmux:iterm" integrate; then
+    # revert aggressive-resize set by tmux-sensible
+    tmux setw -g aggressive-resize off
     tmux_cmd+=(-CC)
   fi
 
