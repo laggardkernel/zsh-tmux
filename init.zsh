@@ -31,7 +31,9 @@ function _zsh_tmux_plugin_run() {
   # TODO: remove illegal characters with regex
   _tmux_session="${_tmux_session// /_}"; _tmux_session="${_tmux_session//./_}"; _tmux_session="${_tmux_session//:/_}"
 
-  _tmux_session_hash="$(pwd|md5)" && _tmux_session_hash="${_tmux_session_hash:0:5}"
+  _tmux_session_hash="$(pwd|md5sum)" \
+    && _tmux_session_hash="${_tmux_session_hash% -}" \
+    && _tmux_session_hash="${_tmux_session_hash:0:5}"
 
   _tmux_session="${_tmux_session}-${_tmux_session_hash}" && unset _tmux_session_hash
 
