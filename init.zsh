@@ -41,13 +41,23 @@ function _zsh_tmux_plugin_run() {
   local return_val
   if [[ "$TERM_PROGRAM" == "iTerm.app" ]] && \
     zstyle -t ":prezto:module:tmux:iterm" integrate; then
-    zstyle -T ":prezto:module:tmux" auto-close && \
-    exec $tmux_cmd new-session -AD -s "$_tmux_session" ||
-    $tmux_cmd new-session -AD -s "$_tmux_session"
+    if zstyle -T ":prezto:module:tmux" auto-close; then
+      if ! tmux has-session -t "$_tmux_session" &>/dev/null; then
+        exec $tmux_cmd new-session -AD -s "$_tmux_session"
+      fi
+    else
+      if ! tmux has-session -t "$_tmux_session" &>/dev/null; then
+        $tmux_cmd new-session -AD -s "$_tmux_session"
+      fi
+    fi
   else
-    return_val=$($tmux_cmd new-session -AD -s "$_tmux_session") && \
-    { zstyle -T ":prezto:module:tmux" auto-close && exit } || \
-    { [[ "$return_val" = *exited* ]] && exit }
+    if ! tmux has-session -t "$_tmux_session" &>/dev/null; then
+      if return_val=$($tmux_cmd new-session -AD -s "$_tmux_session"); then
+        zstyle -T ":prezto:module:tmux" auto-close && exit
+      else
+        [[ "$return_val" = *exited* ]] && exit
+      fi
+    fi
   fi
   # set +x
 }
