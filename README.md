@@ -15,20 +15,20 @@ Auto start a tmux session once shell is launched. Auto name the session as `dire
 
 ## Installation
 
-### [Zplugin](https://github.com/zdharma/zplugin)
+### [Zinit](https://github.com/zdharma/zinit)
 
-The only ZSH plugin manager solves the time-consuming init for `nvm`, `nodenv`, `pyenv`, `rvm`, `rbenv`, `thefuck`, `fasd`, etc, with its amazing async [Turbo Mode](https://github.com/zdharma/zplugin#turbo-mode-zsh--53).
+The only ZSH plugin manager solves the time-consuming init for `nvm`, `nodenv`, `pyenv`, `rvm`, `rbenv`, `thefuck`, `fasd`, etc, with its amazing async [Turbo Mode](https://zdharma.org/zinit/wiki/INTRODUCTION/#turbo_mode_zsh_53).
 
 ```zsh
 # add it into your .zshrc
-zplugin ice pick'init.zsh'
-zplugin light laggardkernel/zsh-tmux
+zinit ice pick'init.zsh'
+zinit light laggardkernel/zsh-tmux
 ```
 
 Update the plugin with
 
 ```zsh
-$ zplg update laggardkernel/zsh-tmux
+$ zinit update laggardkernel/zsh-tmux
 ```
 
 ### [Prezto](https://github.com/sorin-ionescu/prezto)
