@@ -88,4 +88,4 @@ zstyle ":prezto:module:tmux:iterm" integrate "yes" # default 'no'
 
 The MIT License (MIT)
 
-Copyright (c) 2020 laggardkernel
+Copyright (c) 2021 laggardkernel

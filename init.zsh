@@ -1,5 +1,5 @@
 #
-# Copyright 2020, laggardkernel and the zsh-tmux contributors
+# Copyright 2021, laggardkernel and the zsh-tmux contributors
 # SPDX-License-Identifier: MIT
 
 #
@@ -31,9 +31,13 @@ function _zsh_tmux_plugin_run() {
   # TODO: remove illegal characters with regex
   _tmux_session="${_tmux_session// /_}"; _tmux_session="${_tmux_session//./_}"; _tmux_session="${_tmux_session//:/_}"
 
-  _tmux_session_hash="$(pwd|md5sum)" \
-    && _tmux_session_hash="${_tmux_session_hash% -}" \
-    && _tmux_session_hash="${_tmux_session_hash:0:5}"
+  if (( $+commands[md5sum] )); then
+    _tmux_session_hash="$(pwd|md5sum)" \
+      && _tmux_session_hash="${_tmux_session_hash% -}"
+  elif (( $+commands[md5] )); then
+    _tmux_session_hash="$(pwd|md5 -r)"
+  fi
+  _tmux_session_hash="${_tmux_session_hash:0:5}"
 
   _tmux_session="${_tmux_session}-${_tmux_session_hash}" && unset _tmux_session_hash
 

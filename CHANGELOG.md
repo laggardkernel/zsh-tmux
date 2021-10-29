@@ -1,22 +1,35 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+- Switch to `md5 -r` in case `md5sum` doesn't exist
+
 ## [1.1.0] - 2020-09-02
+
 ### Added
+
 - Disable aggressive-resize automatically for iTerm2 tmux integration mode
 
 ### Changed
+
 - Replace command `md5` with `md5sum` for Linux support
 - If session exists, don't attach to it. No force attach anymore.
 
 ### Removed
+
 - remove forcing `TERM`, respect `TERM` set by user
 
 ## [1.0.0] - 2018-04-21
+
 ### Added
+
 - Attach/Create sessions automatically on shell run
 - Consistent session name for the same directory
 - [Prezto](https://github.com/sorin-ionescu/prezto) custom module support
