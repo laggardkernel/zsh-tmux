@@ -2,16 +2,17 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Auto start a tmux session once shell is launched. Auto name the session as `directory-hash` to keeps a consistent name for sessions created in the same directories, which means we could auto attach to an existing session.
+Auto start a multiplexer session once the shell is launched. Herdr is preferred when installed, with tmux as the fallback. With tmux, sessions are named `directory-hash` so the same directory maps to a stable name; if that session already exists, the plugin does not attach to it. Herdr uses its own persistent default session plus directory-based workspaces; if that server is already running, the plugin does not attach to it.
 
 ## Features
 
-- Creating/Attaching sessions automatically on shell run
-- Consistent session name for the same directory
+- Creating sessions automatically on shell run
+- Consistent tmux session name for the same directory
+- Herdr preferred when installed, with tmux as the fallback; either backend can be selected explicitly
 - Options to
-    - Disable auto session creating/attaching
-    - Kill shell automatically once u detach from a tmux session
-    - Custom environment variable `TERM` for `tmux` commands
+    - Disable auto session creating
+    - Kill the launching shell automatically once you detach (`auto-close`)
+    - Enable Tmux CONTROL MODE in iTerm (tmux only)
 
 ## Installation
 
@@ -49,12 +50,26 @@ git clone https://github.com/laggardkernel/zsh-tmux.git ${ZDOTDIR:-$HOME}/.zprez
 ```
 
 ## Settings
-### Auto Start
-Automatically attach to an existing tmux session, or create a session once the plugin is enabled. Disable auto attaching/creating with
+### Backend
+Herdr is preferred when the style is unset and installed. tmux is used when Herdr is unavailable. Select a backend explicitly when needed:
 
 ```zsh
-# global setting
-NO_AUTO_TMUX=1 # enabled by default
+# Prefer Herdr explicitly
+zstyle ':prezto:module:tmux' backend herdr
+
+# Use tmux explicitly
+zstyle ':prezto:module:tmux' backend tmux
+```
+
+Herdr is launched as bare `herdr` only when the default server is not running. The plugin does not pass tmux `directory-hash` names, `-CC`, or a `TERM` override to Herdr. Set this style before loading the plugin. Unknown backend values are ignored.
+
+### Auto Start
+Automatically create a session once the plugin is enabled. These settings apply to both tmux and Herdr. Disable auto creating with
+
+```zsh
+# disable automatic start (auto-start is on by default)
+# the name is kept for compatibility and also applies to Herdr
+NO_AUTO_TMUX=1
 
 # setting for local terminal only
 zstyle ':prezto:module:tmux:auto-start' local 'no' # default 'yes'
@@ -63,26 +78,31 @@ zstyle ':prezto:module:tmux:auto-start' local 'no' # default 'yes'
 zstyle ':prezto:module:tmux:auto-start' remote 'no' # default 'no'
 ```
 
-### TERM Variable
-Custom environment variable `TERM` for `tmux` commands.
+For tmux, if a session with the generated `directory-hash` name already exists, the plugin does not attach to it.
+
+For Herdr, if `herdr status server` reports the default server as running, the plugin does not attach. Nested Herdr launches are skipped when `HERDR_ENV=1` (set inside Herdr-managed panes). On SSH, the plugin runs `herdr` on the remote host; it does not use `herdr --remote`.
+
+### Auto Close
+Exit the launching shell when the multiplexer client ends. Enabled by default.
 
 ```zsh
-zstyle ":prezto:module:tmux:term" with_256color "xterm-256color" # default screen-256
-zstyle ":prezto:module:tmux:term" without_256color "xtermr" # default screen
+zstyle ':prezto:module:tmux' auto-close 'no' # default 'yes'
 ```
 
+With Herdr, enabled `auto-close` replaces the shell with `herdr` (`exec`), so the shell ends when you detach. Disabled `auto-close` runs `herdr` in the current shell and returns to that shell after detach.
+
 ### iTerm Integration
-Enable auto session creating/attaching support for Tmux CONTROL MODE in iTerm with
+Enable auto session creating support for Tmux CONTROL MODE in iTerm with
 
 ```zsh
 zstyle ":prezto:module:tmux:iterm" integrate "yes" # default 'no'
 ```
 
+iTerm control mode is tmux-only. Herdr never receives `-CC` and does not change tmux `aggressive-resize`.
+
 ## Todo
 
 - [ ] Length customization for hash suffix in session name
-- [ ] Setting to kill shell when detach from a session
-- [ ] Setting to kill shell when exit from a session
 
 ## License
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Add Herdr backend support. When no backend is configured, Herdr is preferred when installed and tmux is used as the fallback; explicit `backend` settings remain supported.
+
 ### Changed
 
 - Switch to `md5 -r` in case `md5sum` doesn't exist
