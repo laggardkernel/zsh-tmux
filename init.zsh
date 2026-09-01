@@ -1,5 +1,5 @@
 #
-# Copyright 2021, laggardkernel and the zsh-tmux contributors
+# Copyright 2026, laggardkernel and the zsh-tmux contributors
 # SPDX-License-Identifier: MIT
 
 #

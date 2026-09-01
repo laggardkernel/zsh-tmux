@@ -108,4 +108,4 @@ iTerm control mode is tmux-only. Herdr never receives `-CC` and does not change 
 
 The MIT License (MIT)
 
-Copyright (c) 2021 laggardkernel
+Copyright (c) 2026 laggardkernel

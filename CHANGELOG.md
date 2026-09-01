@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+None.
+
+## [1.2.0] - 2026-08-31
+
 ### Added
 
 - Add Herdr backend support. When no backend is configured, Herdr is preferred when installed and tmux is used as the fallback; explicit `backend` settings remain supported.
@@ -43,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Option: Support Tmux CONTROL MODE in iTerm
 - Option: Custom environment variable `TERM` for `tmux` commands
 
-[Unreleased]: https://github.com/laggardkernel/zsh-tmux/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/laggardkernel/zsh-tmux/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/laggardkernel/zsh-tmux/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/laggardkernel/zsh-tmux/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/laggardkernel/zsh-tmux/compare/4b9f3373...v1.0.0
